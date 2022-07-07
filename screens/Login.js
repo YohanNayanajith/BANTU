@@ -53,16 +53,17 @@ const Login = () => {
       if (flag) {
         Cookies.set("UserName", data.username, { expires: 70000, path: "" });
         Cookies.set("loginstatus", "loged", { expires: 70000, path: "" });
-        Swal.fire({
-          title: "Success!",
-          text: "Login Successed!",
-          icon: "success",
-          confirmButtonText: "OK",
-        }).then((okay) => {
-          if (okay) {
-            navigation.navigate("Tabs");
-          }
-        });
+        navigation.navigate("Tabs");
+        // Swal.fire({
+        //   title: "Success!",
+        //   text: "Login Successed!",
+        //   icon: "success",
+        //   confirmButtonText: "OK",
+        // }).then((okay) => {
+        //   if (okay) {
+        //     navigation.navigate("Tabs");
+        //   }
+        // });
       } else {
         alert("Entered username & password is wrong!");
         //   Swal.fire({

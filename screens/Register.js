@@ -6,16 +6,23 @@ import SocialSignInButtons from "../components/SocialSignInButtons.component";
 // import { useNavigation } from "@react-navigation/core";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
+import SelectList from "react-native-dropdown-select-list";
 
-const URL = "https://62907d9827f4ba1c65ba1783.mockapi.io/api/v1/register";
+const URL = "https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/users";
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const Register = () => {
   const { control, handleSubmit, watch } = useForm();
+  const [selected, setSelected] = useState("");
   const pwd = watch("password");
   const navigation = useNavigation();
+
+  const dropDownData = [
+    { key: "1", value: "user" },
+    { key: "2", value: "worker" },
+  ];
 
   const onRegisterPressed = async (data) => {
     console.log(data);
@@ -28,11 +35,12 @@ const Register = () => {
         },
         body: JSON.stringify({
           name: data.username,
-          telephone_no: data.username,
-          address: data.address,
+          telephone_no: data.telephone_no,
+          //   address: data.address,
           email: data.email,
           password: data.password,
           confirm_password: data.password_repeat,
+          selectUser:selected,
         }),
       });
       let json = await response.json();
@@ -101,14 +109,30 @@ const Register = () => {
             },
           }}
         />
-        <CustomInput
+        {/* <CustomInput
           name="address"
           control={control}
           placeholder="Address"
           rules={{
             required: "Address is required",
           }}
-        />
+        /> */}
+        <View style={styles.box}>
+          <SelectList
+            data={dropDownData}
+            setSelected={setSelected}
+            // rowStyle={styles.box}
+            boxStyles={{ borderColor: "white", paddingHorizontal: 10 }}
+            inputStyles={{ color: "gray" }}
+            dropdownStyles={{ borderColor: "white" }}
+            dropdownItemStyles={styles.itemStyle}
+            dropdownTextStyles={{ color: "gray" }}
+            placeholder="Select User Type"
+            // maxWidth={"100%"}
+            search={false}
+          />
+        </View>
+
         <CustomInput
           name="password"
           control={control}
@@ -177,6 +201,27 @@ const styles = StyleSheet.create({
   },
   link: {
     color: "#FDB075",
+  },
+  box: {
+    backgroundColor: "white",
+    width: "100%",
+
+    borderColor: "#e8e8e8",
+    borderWidth: 1,
+    borderRadius: 5,
+
+    // paddingHorizontal: 10,
+    // paddingVertical: 10,
+    marginVertical: 5,
+  },
+  itemStyle: {
+    borderBottomColor: "black",
+    borderTopColor: "white",
+    borderLeftColor: "white",
+    borderRightColor: "white",
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderWidth: 1,
   },
 });
 
