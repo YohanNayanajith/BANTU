@@ -59,6 +59,7 @@ const Login = () => {
         // 2 - worker
         console.log(role);
         Cookies.set("UserName", data.username, { expires: 70000, path: "" });
+        Cookies.set("UserID", data.id, { expires: 70000, path: "" });
         Cookies.set("loginstatus", "loged", { expires: 70000, path: "" });
         Cookies.set("role", role, { expires: 70000, path: "" });
 

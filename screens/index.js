@@ -6,5 +6,6 @@ import Profile from "./Profile";
 import Search from "./Search";
 import AddPost from "./AddPost";
 import FindCustomers from "./FindCustomers";
+import Payment from "./Payment";
 
-export { Login,ForgetPassword,Register,Home,Profile,Search,AddPost,FindCustomers };
+export { Login,ForgetPassword,Register,Home,Profile,Search,AddPost,FindCustomers,Payment };

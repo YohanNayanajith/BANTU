@@ -18,6 +18,7 @@ import CustomButton from "../components/CustomButton.component";
 // import { useNavigation } from "@react-navigation/core";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
+import Cookies from "js-cookie";
 // import { icons, images, SIZES, COLORS } from "../constants";
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // const { height } = Dimensions.get("window");
@@ -26,8 +27,8 @@ import Header from "../components/Header.component";
 
 import categories from "../constans/categories";
 
-const URL = "https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/categories";
-const URL1 = "https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/post";
+const URL1 = "https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/categories";
+const URL = "https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/post";
 
 // const dataCalled = () => {
 //   fetch(URL, { method: "GET" })
@@ -47,115 +48,164 @@ const AddPost = () => {
   const [isLoading, setLoading] = useState(false);
   const [selected, setSelected] = useState("");
   const [data, setData] = useState([]);
-//   const [dropDownData, setDropDownData] = useState([]);
+  const [currentDate, setCurrentDate] = useState('');
+  const [currentTime, setCurrentTime] = useState('');
+  //   const [dropDownData, setDropDownData] = useState([]);
 
   const { control, handleSubmit, watch } = useForm();
   const navigation = useNavigation();
 
-//   const dropDownData = dropDownData1;
+  const UserID = Cookies.get('UserID');
 
-//   useEffect(() => {
-//     fetch(URL, { method: "GET" })
-//       .then((response) => response.json()) // get response, convert to json
-//       .then((json) => {
-//         setData(json);
-//         createDataArray();
-//         console.log("useEffect");
-//         console.log(data);
-//         console.log(dropDownData);
-//       })
-//       .catch((error) => alert(error)) // display errors
-//       .finally(() => setLoading(false)); // change loading state
-//   }, []);
+  useEffect(() => {
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+    var hours = new Date().getHours(); //Current Hours
+    var min = new Date().getMinutes(); //Current Minutes
+    var sec = new Date().getSeconds(); //Current Seconds
+    setCurrentDate(
+      date + '/' + month + '/' + year 
+    );
+    setCurrentTime(
+        hours + ':' + min + ':' + sec
+    );
+  }, []);
+
+  const onConfirmButtonPressed = async (data) => {
+    console.log(data);
+    try {
+      let response = await fetch(URL, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postTitle: data.postTitle,
+          category: data.category,
+          postDetail: data.postDetail,
+          userID: UserID,
+          noOfLikes: 0,
+          date: currentDate,
+          time: currentTime,
+          isApproved: 0,
+        }),
+      });
+      let json = await response.json();
+      console.log(json);
+    } catch (error) {
+      alert(error);
+    }
+    navigation.navigate("Login");
+  };
+
+  //   const dropDownData = dropDownData1;
+
+  //   useEffect(() => {
+  //     fetch(URL, { method: "GET" })
+  //       .then((response) => response.json()) // get response, convert to json
+  //       .then((json) => {
+  //         setData(json);
+  //         createDataArray();
+  //         console.log("useEffect");
+  //         console.log(data);
+  //         console.log(dropDownData);
+  //       })
+  //       .catch((error) => alert(error)) // display errors
+  //       .finally(() => setLoading(false)); // change loading state
+  //   }, []);
 
   //   dataCalled();
 
-    // async function getCategoriesAsync() {
-    //   try {
-    //     let response = await fetch(URL);
-    //     let json = await response.json();
-    //     setData(json);
-    //     setLoading(false);
-    //     createDataArray();
-    //     console.log("Normal");
-    //     console.log(data);
-    //     console.log(dropDownData);
-    //   } catch (error) {
-    //     alert(error);
-    //   }
-    // }
+  // async function getCategoriesAsync() {
+  //   try {
+  //     let response = await fetch(URL);
+  //     let json = await response.json();
+  //     setData(json);
+  //     setLoading(false);
+  //     createDataArray();
+  //     console.log("Normal");
+  //     console.log(data);
+  //     console.log(dropDownData);
+  //   } catch (error) {
+  //     alert(error);
+  //   }
+  // }
 
   //this is came form database
-//   const dropDownData = [];
+  //   const dropDownData = [];
 
-//   const createDataArray = () => {
-//     data.forEach((x) => {
-//         setDropDownData({ key: x.id, value: x.category })
-//     //   dropDownData.push({ key: x.id, value: x.category });
-//     });
-//   };
+  //   const createDataArray = () => {
+  //     data.forEach((x) => {
+  //         setDropDownData({ key: x.id, value: x.category })
+  //     //   dropDownData.push({ key: x.id, value: x.category });
+  //     });
+  //   };
 
-  const onConfirmButtonPressed = (data) => {
-    console.log(data);
-    console.log("confirm button pressed");
-  };
+  //   const onConfirmButtonPressed = (data) => {
+  //     console.log(data);
+  //     console.log("confirm button pressed");
+  //   };
 
   return (
     <View>
       <Header title={"BANTU.LK"} />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.root}>
-          <Text style={styles.title}>Add New Post</Text>
+      <View style={styles.title}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.root}>
+            <Text style={styles.title}>Add New Post</Text>
 
-          <CustomInput
-            name="postTitle"
-            control={control}
-            placeholder="Title"
-            rules={{
-              required: "Title is required",
-              minLength: {
-                value: 3,
-                message: "Title should be at least 3 characters long",
-              },
-            }}
-          />
+            <CustomInput
+              name="postTitle"
+              control={control}
+              placeholder="Title"
+              rules={{
+                required: "Title is required",
+                minLength: {
+                  value: 3,
+                  message: "Title should be at least 3 characters long",
+                },
+              }}
+            />
 
-          {isLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <View style={styles.box}>
-              <SelectList
-                data={categories}
-                setSelected={setSelected}
-                // rowStyle={styles.box}
-                boxStyles={{ borderColor: "white", paddingHorizontal: 10 }}
-                inputStyles={{ color: "gray" }}
-                dropdownStyles={{ borderColor: "white" }}
-                dropdownItemStyles={styles.itemStyle}
-                dropdownTextStyles={{ color: "gray" }}
-                placeholder="Select your category"
-                // maxWidth={"100%"}
-                search={false}
-              />
-            </View>
-          )}
+            {isLoading ? (
+              <ActivityIndicator />
+            ) : (
+              <View style={styles.box}>
+                <SelectList
+                  data={categories}
+                  setSelected={setSelected}
+                  // rowStyle={styles.box}
+                  boxStyles={{ borderColor: "white", paddingHorizontal: 10 }}
+                  inputStyles={{ color: "gray" }}
+                  dropdownStyles={{ borderColor: "white" }}
+                  dropdownItemStyles={styles.itemStyle}
+                  dropdownTextStyles={{ color: "gray" }}
+                  placeholder="Select your category"
+                  // maxWidth={"100%"}
+                  search={false}
+                />
+              </View>
+            )}
 
-          <CustomInput
-            name="postDetail"
-            control={control}
-            placeholder="Description"
-            rules={{
-              required: "Description is required",
-            }}
-          />
+            <CustomInput
+              name="postDetail"
+              control={control}
+              placeholder="Description"
+              rules={{
+                required: "Description is required",
+              }}
+            />
 
-          <CustomButton
-            text="Confirm"
-            onPress={handleSubmit(onConfirmButtonPressed)}
-          />
-        </View>
-      </ScrollView>
+            <CustomButton
+              text="Confirm"
+              onPress={handleSubmit(onConfirmButtonPressed)}
+            />
+          </View>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -169,7 +219,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "#051C60",
-    margin: 10,
+    marginBottom: 10,
+    // paddingTop: 10,
   },
   text: {
     color: "gray",

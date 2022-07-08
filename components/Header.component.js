@@ -18,71 +18,78 @@ const Header = (props) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flexDirection: "row", height: 50 }}>
-        <TouchableOpacity
-          style={{
-            width: 50,
-            paddingLeft: SIZES.padding * 2,
-            justifyContent: "center",
-          }}
-        >
-          <Image
-            source={icons.bell}
-            resizeMode="contain"
+    <View style={styles.backContainer}>
+      <SafeAreaView style={styles.container}>
+        <View style={{ flexDirection: "row", height: 50 }}>
+          <TouchableOpacity
             style={{
-              width: 30,
-              height: 30,
-            }}
-          />
-        </TouchableOpacity>
-
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <View
-            style={{
-              width: "70%",
-              height: "100%",
-              backgroundColor: COLORS.lightGray3,
-              alignItems: "center",
+              width: 50,
+              paddingLeft: SIZES.padding * 2,
               justifyContent: "center",
-              borderRadius: SIZES.radius,
             }}
           >
-            <Text style={{ fontSize: SIZES.h3, lineHeight: 22 }}>
-              {props.title}
-            </Text>
-          </View>
-        </View>
+            <Image
+              source={icons.bell}
+              resizeMode="contain"
+              style={{
+                width: 30,
+                height: 30,
+              }}
+            />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={{
-            width: 50,
-            paddingRight: SIZES.padding * 2,
-            justifyContent: "center",
-          }}
-          onPress={signOut}
-        >
-          <Image
-            source={icons.logout}
-            resizeMode="contain"
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <View
+              style={{
+                width: "70%",
+                height: "100%",
+                backgroundColor: COLORS.lightGray3,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: SIZES.radius,
+              }}
+            >
+              <Text style={{ fontSize: SIZES.h3, lineHeight: 22 }}>
+                {props.title}
+              </Text>
+            </View>
+          </View>
+
+          <TouchableOpacity
             style={{
-              width: 30,
-              height: 30,
+              width: 50,
+              paddingRight: SIZES.padding * 2,
+              justifyContent: "center",
             }}
-          />
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+            onPress={signOut}
+          >
+            <Image
+              source={icons.logout}
+              resizeMode="contain"
+              style={{
+                width: 30,
+                height: 30,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGray4,
+    // backgroundColor: COLORS.lightGray4,
+    // backgroundColor: "black",
   },
+  backContainer: {
+    backgroundColor: COLORS.white,
+    height:50
+  }
 });
 
 export default Header;
