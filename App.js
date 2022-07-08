@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 
-import { Login,ForgetPassword,Register } from './screens';
+import { Login,ForgetPassword,Register,AddPost,FindCustomers,Home,Profile,Search } from './screens';
 import Tabs from './navigation/tabs';
 
 const Stack = createStackNavigator();
@@ -22,11 +22,11 @@ export default function App() {
                 <Stack.Screen name="Tabs" component={Tabs} />
                 <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
                 <Stack.Screen name="Register" component={Register} />
-                {/* <Stack.Screen name="Home" component={Home} />
-                <Stack.Screen name="Event" component={Event} />
-                <Stack.Screen name="Register" component={Register} />
-                <Stack.Screen name="Setting" component={Setting} />
-                <Stack.Screen name="PetsDetail" component={PetsDetail} /> */}
+                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="AddPost" component={AddPost} />
+                <Stack.Screen name="FindCustomers" component={FindCustomers} />
+                <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen name="Search" component={Search} />
             </Stack.Navigator>
         </NavigationContainer>
   );
