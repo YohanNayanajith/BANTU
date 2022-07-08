@@ -27,6 +27,7 @@ const Login = () => {
   //       ? JSON.parse(localStorage.getItem("loginData"))
   //       : null
   //   );
+  const [ role,setRole ] = useState("");
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -45,15 +46,30 @@ const Login = () => {
       result.map((x) => {
         if (x.name == data.username && x.password == data.password) {
           flag = true;
+          console.log(x.selectUser);
+          setRole(x.selectUser);
+          console.log(x.selectUser);
           // AsyncStorage.setItem("userName",x.name);
           // <eventsData data={x.name} />
         }
       });
 
       if (flag) {
+        // 1 - user
+        // 2 - worker
+        console.log(role);
         Cookies.set("UserName", data.username, { expires: 70000, path: "" });
         Cookies.set("loginstatus", "loged", { expires: 70000, path: "" });
-        navigation.navigate("Tabs");
+        Cookies.set("role", role, { expires: 70000, path: "" });
+
+        if(role == "1"){
+          alert("Role - User");
+          navigation.navigate("Tabs","1");
+        }else {
+          alert("Role - Worker");
+          navigation.navigate("Tabs","2");
+        }
+        
         // Swal.fire({
         //   title: "Success!",
         //   text: "Login Successed!",

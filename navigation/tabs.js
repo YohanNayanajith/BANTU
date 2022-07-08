@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  View,
-  Image,
-  TouchableOpacity
-} from 'react-native';
+import { View, Image, TouchableOpacity } from "react-native";
 import {
   createBottomTabNavigator,
   BottomTabBar,
@@ -89,7 +85,13 @@ const CustomTabBar = (props) => {
 
 const Tab = createBottomTabNavigator();
 
-const Tabs = () => {
+const Tabs = ({ navigation, route }) => {
+  const role = route.params;
+  console.log(role);
+
+  // if(role == "1"){
+
+  // }
   return (
     <Tab.Navigator
       screenOptions={{
@@ -144,24 +146,26 @@ const Tabs = () => {
         }}
       />
 
-      <Tab.Screen
-        name="AddPost"
-        component={AddPost}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={icons.add}
-              resizeMode="contain"
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: focused ? COLORS.primary : COLORS.secondary,
-              }}
-            />
-          ),
-          tabBarButton: (props) => <TabBarCustomButton {...props} />,
-        }}
-      />
+      {role == "1" && (
+        <Tab.Screen
+          name="AddPost"
+          component={AddPost}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={icons.add}
+                resizeMode="contain"
+                style={{
+                  width: 25,
+                  height: 25,
+                  tintColor: focused ? COLORS.primary : COLORS.secondary,
+                }}
+              />
+            ),
+            tabBarButton: (props) => <TabBarCustomButton {...props} />,
+          }}
+        />
+      )}
 
       <Tab.Screen
         name="FindCustomers"
