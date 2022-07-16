@@ -18,6 +18,7 @@ import { useForm, Controller } from "react-hook-form";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
+
 // const URL = "https://62907d9827f4ba1c65ba1783.mockapi.io/api/v1/register";
 const URL = "https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/users";
 
@@ -27,7 +28,7 @@ const Login = () => {
   //       ? JSON.parse(localStorage.getItem("loginData"))
   //       : null
   //   );
-  const [ role,setRole ] = useState("");
+  const [role, setRole] = useState("");
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -63,14 +64,14 @@ const Login = () => {
         Cookies.set("loginstatus", "loged", { expires: 70000, path: "" });
         Cookies.set("role", role, { expires: 70000, path: "" });
 
-        if(role == "1"){
+        if (role == "1") {
           alert("Role - User");
-          navigation.navigate("Tabs","1");
-        }else {
+          navigation.navigate("Tabs", "1");
+        } else {
           alert("Role - Worker");
-          navigation.navigate("Tabs","2");
+          navigation.navigate("Tabs", "2");
         }
-        
+
         // Swal.fire({
         //   title: "Success!",
         //   text: "Login Successed!",
@@ -144,11 +145,11 @@ const Login = () => {
           text="Forgot password?"
           onPress={onForgotPasswordPressed}
           type="TERTIARY"
-        //   bgColor="#E7EAF4"
-        //   fgColor="#4765A9"
+          //   bgColor="#E7EAF4"
+          //   fgColor="#4765A9"
         />
 
-        <SocialSignInButtons />
+        {Platform.OS === "android" ? <SocialSignInButtons /> : null}
 
         <CustomButton
           text="Don't have an account? Create one"

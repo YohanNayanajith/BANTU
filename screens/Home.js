@@ -1,91 +1,31 @@
-import React, { useState, useEffect } from "react";
 import {
-  Dimensions,
-  SafeAreaView,
   View,
-  Image,
-  TextInput,
   Text,
-  TouchableOpacity,
-  FlatList,
+  SafeAreaView,
   ScrollView,
-  Button,
-  StyleSheet,
-  ActivityIndicator,
+  Image,
+  Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { icons, images, SIZES, COLORS } from "../constans";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-const { height } = Dimensions.get("window");
-
+import React, { Component, useEffect, useState } from "react";
 import Header from "../components/Header.component";
+import SearchComponent from "../components/Search.component";
+import HorizontalScroll from "../components/HorizontalScroll.component";
+import ImageView from "../components/ImageView.component";
+import LatestPost from "../components/LatestPost.component";
+const { height, width } = Dimensions.get("window");
+import { Divider } from "@react-native-material/core";
+import { useNavigation } from "@react-navigation/core";
 
 const URL = "https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/post";
-
-const Card = ({ pet, navigation }) => {
-  return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate("Payment", pet)}
-    >
-      <View style={styles.cardContainer}>
-        {/* Render the card image */}
-        <View style={styles.cardImageContainer}>
-          <Image
-            // source={{ uri: pet.pet_image }}
-            source={{ uri: "http://www.bantu.lk/images/LOGO3.png" }}
-            style={{
-              width: "100%",
-              height: "100%",
-              resizeMode: "contain",
-            }}
-          />
-        </View>
-
-        {/* Render all the card details here */}
-        <View style={styles.cardDetailsContainer}>
-          {/* Name and gender icon */}
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text
-              style={{ fontWeight: "bold", color: COLORS.dark, fontSize: 20 }}
-            >
-              {pet?.postTitle}
-            </Text>
-            {/* <Icon name="gender-male" size={22} color={COLORS.grey} /> */}
-          </View>
-
-          {/* Render the age and type */}
-          <Text style={{ fontSize: 12, marginTop: 5, color: COLORS.dark }}>
-            {pet?.postDetail}
-          </Text>
-          <Text style={{ fontSize: 10, marginTop: 5, color: COLORS.grey }}>
-            {pet?.category}
-          </Text>
-
-          {/* Render distance and the icon */}
-          <View style={{ marginTop: 5, flexDirection: "row" }}>
-            <Icon
-              name="gender-male-female-variant"
-              color={COLORS.primary}
-              size={18}
-            />
-            <Text style={{ fontSize: 12, color: COLORS.grey, marginLeft: 5 }}>
-              {pet?.date}
-            </Text>
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 const Home = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   const navigation = useNavigation();
+
+  console.log(data);
+  console.log(Object.keys(data).length);
 
   useEffect(() => {
     fetch(URL, { method: "GET" })
@@ -98,119 +38,67 @@ const Home = () => {
   }, []);
 
   return (
-    <View>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header title={"BANTU.LK"} />
 
-      <SafeAreaView style={{ flex: 1, color: COLORS.white }}>
-        {/* <ScrollView showsVerticalScrollIndicator={false}> */}
-        <View style={styles.mainContainer}>
-          {/* Render the search inputs and icons */}
-          <View style={styles.searchInputContainer}>
-            <Icon name="magnify" size={24} color={COLORS.grey} />
-            <TextInput
-              placeholderTextColor={COLORS.grey}
-              placeholder="Search pet to adopt"
-              style={{ flex: 1 }}
-            />
-            <Icon name="sort-ascending" size={24} color={COLORS.grey} />
-          </View>
+      <SearchComponent />
 
-          {isLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={{ flex: 1, marginTop: 20 }}>
-                <FlatList
-                  data={data}
-                  keyExtractor={({ id }, index) => id}
-                  renderItem={({ item }) => (
-                    <Card pet={item} navigation={navigation} />
-                  )}
-                  contentContainerStyle={{
-                    flexGrow: 1,
-                  }}
-                />
-              </View>
-            </ScrollView>
-          )}
+      <ScrollView scrollEventThrottle={16}>
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <HorizontalScroll title={"CATEGORY"} />
+          {/* <Divider style={{ marginTop: 60 }} leadingInset={16} />; */}
+          <View style={{ marginTop: 40, paddingHorizontal: 20 }}>
+            {/* <Text style={{ fontSize: 24, fontWeight: "700" }}>
+              Introducing Airbnb Plus
+            </Text>
+            <Text style={{ fontWeight: "100", marginTop: 10 }}>
+              A new selection of homes verified for quality & comfort
+            </Text> */}
+            <ImageView />
+          </View>
         </View>
-        {/* </ScrollView> */}
-      </SafeAreaView>
-    </View>
+
+        <View style={{ marginTop: 40 }}>
+          <Text
+            style={{ fontSize: 24, fontWeight: "700", paddingHorizontal: 20 }}
+          >
+            LATEST POSTS
+          </Text>
+          <View
+            style={{
+              paddingHorizontal: 20,
+              marginTop: 20,
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+            }}
+          >
+            <LatestPost
+              width={width}
+              name="The Cozy Place"
+              type="PRIVATE ROOM - 2 BEDS"
+              price={82}
+              rating={4}
+            />
+            <LatestPost
+              width={width}
+              name="The Cozy Place"
+              type="PRIVATE ROOM - 2 BEDS"
+              price={82}
+              rating={4}
+            />
+            <LatestPost
+              width={width}
+              name="The Cozy Place"
+              type="PRIVATE ROOM - 2 BEDS"
+              price={82}
+              rating={4}
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 1,
-  },
-
-  header: {
-    padding: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  mainContainer: {
-    flex: 1,
-    backgroundColor: COLORS.lightGray,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    //   marginTop: 20,
-    paddingHorizontal: 20,
-    //   paddingVertical: 40,
-    minHeight: height,
-  },
-  searchInputContainer: {
-    height: 50,
-    backgroundColor: COLORS.white,
-    borderRadius: 7,
-    paddingHorizontal: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingTop: 10,
-  },
-  categoryBtn: {
-    height: 50,
-    width: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 10,
-  },
-  categoryBtnName: {
-    color: COLORS.dark,
-    fontSize: 10,
-    marginTop: 5,
-    fontWeight: "bold",
-  },
-  cardContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  cardDetailsContainer: {
-    height: 120,
-    backgroundColor: COLORS.white,
-    flex: 1,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
-    padding: 20,
-    justifyContent: "center",
-  },
-  cardImageContainer: {
-    height: 150,
-    width: 140,
-    backgroundColor: COLORS.background,
-    borderRadius: 20,
-  },
-});
 
 export default Home;

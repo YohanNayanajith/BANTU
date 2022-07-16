@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,19 +6,37 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  StatusBar,
+  Dimensions,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+const { height, width } = Dimensions.get("window");
 
 import { icons, SIZES, COLORS } from "../constans";
 
 const Header = (props) => {
+  // const [startHeaderHeight, setStartHeaderHeight] = useState(200);
   const navigation = useNavigation();
+
+  // useEffect(() => {
+  //   if (Platform.OS == "android") {
+  //     setStartHeaderHeight(100 + StatusBar.currentHeight);
+  //   }
+  // }, []);
+
   const signOut = () => {
     navigation.navigate("Login");
   };
 
   return (
-    <View style={styles.backContainer}>
+    <View
+      style={{
+        height: 50,
+        marginTop: Platform.OS == "android" ? 30 : null,
+        backgroundColor: COLORS.white,
+      }}
+    >
       <SafeAreaView style={styles.container}>
         <View style={{ flexDirection: "row", height: 50 }}>
           <TouchableOpacity
@@ -86,10 +104,6 @@ const styles = StyleSheet.create({
     // backgroundColor: COLORS.lightGray4,
     // backgroundColor: "black",
   },
-  backContainer: {
-    backgroundColor: COLORS.white,
-    height:50
-  }
 });
 
 export default Header;
