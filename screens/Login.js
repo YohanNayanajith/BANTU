@@ -58,17 +58,17 @@ const Login = () => {
       if (flag) {
         // 1 - user
         // 2 - worker
-        console.log(role);
+        console.log(data.id);
         Cookies.set("UserName", data.username, { expires: 70000, path: "" });
         Cookies.set("UserID", data.id, { expires: 70000, path: "" });
         Cookies.set("loginstatus", "loged", { expires: 70000, path: "" });
         Cookies.set("role", role, { expires: 70000, path: "" });
 
         if (role == "1") {
-          alert("Role - User");
+          // alert("Role - User");
           navigation.navigate("Tabs", "1");
         } else {
-          alert("Role - Worker");
+          // alert("Role - Worker");
           navigation.navigate("Tabs", "2");
         }
 
@@ -174,7 +174,8 @@ const styles = StyleSheet.create({
     // backgroundColor:'red',
   },
   logo: {
-    width: "70%",
+    // width: "70%",
+    width: 200,
     maxWidth: 300,
     maxHeight: 200,
   },

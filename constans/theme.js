@@ -6,6 +6,7 @@ export const COLORS = {
     // base colors
     primary: "#FC6D3F", // orange
     secondary: "#CDCDD2",   // gray
+    backgroundColor: "#F5F5F5",
 
     // colors
     black: "#1E1F20",
@@ -28,6 +29,7 @@ export const SIZES = {
     radius: 30,
     padding: 10,
     padding2: 12,
+    mobileHeading: 24,
 
     // font sizes
     largeTitle: 50,
@@ -57,6 +59,7 @@ export const FONTS = {
     body3: { fontFamily: "Roboto-Regular", fontSize: SIZES.body3, lineHeight: 22 },
     body4: { fontFamily: "Roboto-Regular", fontSize: SIZES.body4, lineHeight: 22 },
     body5: { fontFamily: "Roboto-Regular", fontSize: SIZES.body5, lineHeight: 22 },
+    fontData: { fontFamily:"Poppins-Regular"},
 };
 
 const appTheme = { COLORS, SIZES, FONTS };

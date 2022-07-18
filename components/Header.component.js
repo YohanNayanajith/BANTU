@@ -12,11 +12,12 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 const { height, width } = Dimensions.get("window");
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { icons, SIZES, COLORS } from "../constans";
 
 const Header = (props) => {
-  // const [startHeaderHeight, setStartHeaderHeight] = useState(200);
+  const [notificationIcon, setNotificationIcon] = useState(COLORS.black);
+  const [logout, setlogout] = useState(COLORS.black);
   const navigation = useNavigation();
 
   // useEffect(() => {
@@ -26,8 +27,13 @@ const Header = (props) => {
   // }, []);
 
   const signOut = () => {
+    setlogout(COLORS.primary);
     navigation.navigate("Login");
   };
+
+  const pressNotification = () => {
+    setNotificationIcon(COLORS.primary);
+  }
 
   return (
     <View
@@ -45,15 +51,17 @@ const Header = (props) => {
               paddingLeft: SIZES.padding * 2,
               justifyContent: "center",
             }}
+            onPress={pressNotification}
           >
-            <Image
+            {/* <Image
               source={icons.bell}
               resizeMode="contain"
               style={{
                 width: 30,
                 height: 30,
               }}
-            />
+            /> */}
+            <Icon name={"bell"} size={30} backgroundColor={notificationIcon} />
           </TouchableOpacity>
 
           <View

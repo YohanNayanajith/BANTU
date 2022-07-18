@@ -26,6 +26,7 @@ export default function App() {
                 <Stack.Screen name="AddPost" component={AddPost} />
                 <Stack.Screen name="FindCustomers" component={FindCustomers} />
                 <Stack.Screen name="Profile" component={Profile} />
+                {/* <Stack.Screen name="Profile" component={Profile1StackScreen} /> */}
                 <Stack.Screen name="Search" component={Search} />
                 <Stack.Screen name="Payment" component={Payment} />
             </Stack.Navigator>

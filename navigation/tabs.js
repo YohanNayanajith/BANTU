@@ -11,6 +11,7 @@ import { Home, Profile, Search, AddPost, FindCustomers } from "../screens";
 
 import { COLORS, icons } from "../constans";
 
+
 const TabBarCustomButton = ({ accessibilityState, children, onPress }) => {
   var isSelected = accessibilityState.selected;
 

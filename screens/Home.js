@@ -15,6 +15,7 @@ import LatestPost from "../components/LatestPost.component";
 const { height, width } = Dimensions.get("window");
 import { Divider } from "@react-native-material/core";
 import { useNavigation } from "@react-navigation/core";
+import { icons, COLORS, SIZES } from "../constans";
 
 const URL = "https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/post";
 
@@ -38,7 +39,7 @@ const Home = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1,backgroundColor:COLORS.backgroundColor }}>
       <Header title={"BANTU.LK"} />
 
       <SearchComponent />
@@ -60,10 +61,11 @@ const Home = () => {
 
         <View style={{ marginTop: 40 }}>
           <Text
-            style={{ fontSize: 24, fontWeight: "700", paddingHorizontal: 20 }}
+            style={{ fontSize: SIZES.mobileHeading, fontWeight: "700", paddingHorizontal: 20 }}
           >
             LATEST POSTS
           </Text>
+          {(isLoading && data.isApproved === 0) ?  <ActivityIndicator /> :
           <View
             style={{
               paddingHorizontal: 20,
@@ -75,26 +77,13 @@ const Home = () => {
           >
             <LatestPost
               width={width}
-              name="The Cozy Place"
-              type="PRIVATE ROOM - 2 BEDS"
-              price={82}
-              rating={4}
-            />
-            <LatestPost
-              width={width}
-              name="The Cozy Place"
-              type="PRIVATE ROOM - 2 BEDS"
-              price={82}
-              rating={4}
-            />
-            <LatestPost
-              width={width}
-              name="The Cozy Place"
-              type="PRIVATE ROOM - 2 BEDS"
+              name={data.postTitle}
+              type={data.postDetail}
               price={82}
               rating={4}
             />
           </View>
+          }
         </View>
       </ScrollView>
     </SafeAreaView>
