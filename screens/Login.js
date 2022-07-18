@@ -17,10 +17,12 @@ import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
-
+// import CookieManager from '@react-native-cookies/cookies';
+import { LoginApi } from "./API/LoginApi";
 
 // const URL = "https://62907d9827f4ba1c65ba1783.mockapi.io/api/v1/register";
-const URL = "https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/users";
+// const URL = "https://192.168.8.187:5000/api/v1/auth/login";
+const URL = "https://localhost:5000/api/v1/auth/login";
 
 const Login = () => {
   //   const [loginData, setLoginData] = useState(
@@ -42,61 +44,34 @@ const Login = () => {
     console.log(data);
     let flag = false;
     try {
-      let response = await fetch(URL);
-      let result = await response.json();
-      result.map((x) => {
-        if (x.name == data.username && x.password == data.password) {
-          flag = true;
-          console.log(x.selectUser);
-          setRole(x.selectUser);
-          console.log(x.selectUser);
-          // AsyncStorage.setItem("userName",x.name);
-          // <eventsData data={x.name} />
-        }
+      let response = await fetch('http://192.168.8.187:5000/api/v1/auth/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: data.username,
+          password: data.password,
+        })
       });
 
-      if (flag) {
-        // 1 - user
-        // 2 - worker
-        console.log(data.id);
-        Cookies.set("UserName", data.username, { expires: 70000, path: "" });
-        Cookies.set("UserID", data.id, { expires: 70000, path: "" });
-        Cookies.set("loginstatus", "loged", { expires: 70000, path: "" });
-        Cookies.set("role", role, { expires: 70000, path: "" });
+      let result = await response.json();
+      // console.log(result);
+      Cookies.set('token', result.accessToken.toString(), { expires: 7 });
+      Cookies.set('userID', result._id.toString(), { expires: 7 });
+      Cookies.set('type', result.selectUser.toString(), { expires: 7 });
+      console.log(result.accessToken);
 
-        if (role == "1") {
-          // alert("Role - User");
-          navigation.navigate("Tabs", "1");
-        } else {
-          // alert("Role - Worker");
-          navigation.navigate("Tabs", "2");
-        }
-
-        // Swal.fire({
-        //   title: "Success!",
-        //   text: "Login Successed!",
-        //   icon: "success",
-        //   confirmButtonText: "OK",
-        // }).then((okay) => {
-        //   if (okay) {
-        //     navigation.navigate("Tabs");
-        //   }
-        // });
+      if (role == "1") {
+        alert("Role - User");
+        navigation.navigate("Tabs", "1");
       } else {
-        alert("Entered username & password is wrong!");
-        //   Swal.fire({
-        //     title: "Error!",
-        //     text: "Entered username & password is wrong!",
-        //     icon: 'error',
-        //     confirmButtonText: "OK",
-        //     }).then(okay => {
-        //         if (okay) {
-
-        //     }
-        // });
+        alert("Role - Worker");
+        navigation.navigate("Tabs", "2");
       }
-    } catch (error) {
-      alert(error);
+    }catch(err){
+      console.log("Something Worng");
     }
   };
 

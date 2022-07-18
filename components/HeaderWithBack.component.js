@@ -11,8 +11,7 @@ import {
 } from "react-native";
 import { icons, COLORS, SIZES, FONTS } from "../constans";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { HeaderBackButton } from "react-navigation-stack";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 
 const HeaderWithBack = ({
   text,
@@ -23,14 +22,14 @@ const HeaderWithBack = ({
 }) => {
   const [backProfile, setBackProfile] = useState(iconsColor);
   const [editProfile, setEditProfile] = useState(iconsColor);
-  const navigate = useNavigation();
+  const navigation = useNavigation();
   const HeaderBackButton = () => {
     setBackProfile(COLORS.primary);
-    // navigate("home");
+    // navigation.navigate("home");
   };
   const HeaderEditButton = () => {
     setEditProfile(COLORS.primary);
-    // navigate("home");
+    // navigation.navigate("EditPost");
   };
 
   return (

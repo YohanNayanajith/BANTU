@@ -21,14 +21,15 @@ const LatestPost = (props) => {
         />
         <View style={styles.container2}>
           <Text style={{ fontSize: 16, fontWeight: "bold", marginRight: 20 }}>
-            I want person to repair my computer.
+            {props.name}
           </Text>
-          <Text style={{ fontSize: 14 }}>2022/07/17 - 4:55 AM</Text>
+          <Text style={{ fontSize: 14 }}>
+            {props.date} {props.time}
+          </Text>
         </View>
       </View>
       <Text style={{ fontSize: 16, paddingLeft: 20, padding: 10 }}>
-        I want person to repair my computer description I want person to repair
-        my computer
+        {props.type}
       </Text>
       <View style={styles.container3}>
         <Image

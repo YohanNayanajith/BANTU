@@ -7,5 +7,6 @@ import Search from "./Search";
 import AddPost from "./AddPost";
 import FindCustomers from "./FindCustomers";
 import Payment from "./Payment";
+import EditPost from "./EditPost";
 
-export { Login,ForgetPassword,Register,Home,Profile,Search,AddPost,FindCustomers,Payment };
+export { Login,ForgetPassword,Register,Home,Profile,Search,AddPost,FindCustomers,Payment,EditPost };

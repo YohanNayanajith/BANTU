@@ -1762,6 +1762,13 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.11.tgz"
   "version" "0.1.11"
 
+"@react-native-cookies/cookies@^6.2.1":
+  "integrity" "sha512-D17wCA0DXJkGJIxkL74Qs9sZ3sA+c+kCoGmXVknW7bVw/W+Vv1m/7mWTNi9DLBZSRddhzYw8SU0aJapIaM/g5w=="
+  "resolved" "https://registry.npmjs.org/@react-native-cookies/cookies/-/cookies-6.2.1.tgz"
+  "version" "6.2.1"
+  dependencies:
+    "invariant" "^2.2.4"
+
 "@react-native-firebase/app@^15.1.1", "@react-native-firebase/app@15.1.1":
   "integrity" "sha512-yLC+BZtXjHLzdwLyt5/ryrUcJhYK+F1mb3GAPUOB5yujM8Ndd0O2HXNoVvLPkhEjEdyvyxfRrvqcT21BKmuw3A=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-15.1.1.tgz"
@@ -6415,7 +6422,7 @@
     "normalize-css-color" "^1.0.2"
     "prop-types" "^15.6.0"
 
-"react-native@*", "react-native@>=0.42.0", "react-native@>=0.48.0", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@0.68.2":
+"react-native@*", "react-native@>= 0.60.2", "react-native@>=0.42.0", "react-native@>=0.48.0", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@0.68.2":
   "integrity" "sha512-qNMz+mdIirCEmlrhapAtAG+SWVx6MAiSfCbFNhfHqiqu1xw1OKXdzIrjaBEPihRC2pcORCoCHduHGQe/Pz9Yuw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.68.2.tgz"
   "version" "0.68.2"

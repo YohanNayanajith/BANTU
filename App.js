@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 
-import { Login,ForgetPassword,Register,AddPost,FindCustomers,Home,Profile,Search,Payment } from './screens';
+import { Login,ForgetPassword,Register,AddPost,FindCustomers,Home,Profile,Search,Payment,EditPost } from './screens';
 import Tabs from './navigation/tabs';
 
 const Stack = createStackNavigator();
@@ -29,6 +29,7 @@ export default function App() {
                 {/* <Stack.Screen name="Profile" component={Profile1StackScreen} /> */}
                 <Stack.Screen name="Search" component={Search} />
                 <Stack.Screen name="Payment" component={Payment} />
+                <Stack.Screen name="EditPost" component={EditPost} />
             </Stack.Navigator>
         </NavigationContainer>
   );

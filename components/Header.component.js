@@ -12,8 +12,9 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 const { height, width } = Dimensions.get("window");
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/FontAwesome";
 import { icons, SIZES, COLORS } from "../constans";
+import Cookies from "js-cookie";
 
 const Header = (props) => {
   const [notificationIcon, setNotificationIcon] = useState(COLORS.black);
@@ -28,12 +29,15 @@ const Header = (props) => {
 
   const signOut = () => {
     setlogout(COLORS.primary);
+    Cookies.remove("token");
+    Cookies.remove("userID");
+    Cookies.remove("type");
     navigation.navigate("Login");
   };
 
   const pressNotification = () => {
     setNotificationIcon(COLORS.primary);
-  }
+  };
 
   return (
     <View

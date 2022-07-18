@@ -16,33 +16,34 @@ import Placeholder from "../components/Placeholder.component";
 import { icons, COLORS, SIZES, FONTS } from "../constans";
 import TextDetail from "../components/TextDetail.component";
 import HeaderWithBack from "../components/HeaderWithBack.component";
+import { useNavigation } from "@react-navigation/core";
 
-// const DATA = [
-//   {
-//     id: "1",
-//     title: "Name",
-//   },
-//   {
-//     id: "2",
-//     title: "Email Address",
-//   },
-//   {
-//     id: "3",
-//     title: "Phone Number",
-//   },
-//   {
-//     id: "4",
-//     title: "User Type",
-//   },
-// ];
+const DATA = [
+  {
+    id: "1",
+    title: "Name",
+  },
+  {
+    id: "2",
+    title: "Email Address",
+  },
+  {
+    id: "3",
+    title: "Phone Number",
+  },
+  {
+    id: "4",
+    title: "User Type",
+  },
+];
 
 const Profile = () => {
-  const [DATA, setDATA] = useState([]);
+  // const [DATA, setDATA] = useState([]);
   const UserID = Cookies.get("UserID");
 
   const URL = `https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/users/${UserID}`;
 
-  useEffect(() => {
+  // useEffect(() => {
     // await axios
     //   .get(URL,{
     //     params:{
@@ -57,18 +58,18 @@ const Profile = () => {
     //     console.log(error);
     //   });
 
-    const getUser = async () => {
-      try {
-        let response = await fetch(URL);
-        let result = await response.json();
-        setDATA(result);
-        console.log(result);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUser();
-  }, []);
+  //   const getUser = async () => {
+  //     try {
+  //       let response = await fetch(URL);
+  //       let result = await response.json();
+  //       setDATA(result);
+  //       console.log(result);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
 
   return (
     <SafeAreaView style={[{ backgroundColor: COLORS.backgroundColor }]}>
@@ -107,8 +108,8 @@ const Profile = () => {
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
               <View>
-                <TextDetail text={"Name"} />
-                <Placeholder text={item.name} />
+                <TextDetail text={item.title} />
+                <Placeholder text={"Name"} />
               </View>
             )}
             keyExtractor={(item) => item.id}
