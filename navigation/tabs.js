@@ -8,7 +8,6 @@ import Svg, { Path } from "react-native-svg";
 import { isIphoneX } from "react-native-iphone-x-helper";
 
 import { Home, Profile, Search, AddPost, FindCustomers } from "../screens";
-
 import { COLORS, icons } from "../constans";
 
 

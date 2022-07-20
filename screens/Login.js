@@ -17,11 +17,13 @@ import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import { useSelector, useDispatch } from "react-redux";
+import { UserLogin } from '../store/actions';
+import { bindActionCreators } from "redux";
+// import { bindActionCreators } from "redux";
+// import { userLogin } from "../redux/index";
 // import CookieManager from '@react-native-cookies/cookies';
-import { LoginApi } from "./API/LoginApi";
 
-// const URL = "https://62907d9827f4ba1c65ba1783.mockapi.io/api/v1/register";
-// const URL = "https://192.168.8.187:5000/api/v1/auth/login";
 const URL = "https://localhost:5000/api/v1/auth/login";
 
 const Login = () => {
@@ -34,6 +36,15 @@ const Login = () => {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
+  // const login = useSelector((state) => state.login);
+  const dispatch = useDispatch();
+  // console.log(login);
+
+  // const { userLogin } = bindActionCreators(
+  //   userLogin,
+  //   dispatch
+  // );
+
   const {
     control,
     handleSubmit,
@@ -41,7 +52,7 @@ const Login = () => {
   } = useForm();
 
   const onSignInPressed = async (data) => {
-    console.log(data);
+    // console.log(data);
     let flag = false;
     try {
       let response = await fetch('http://192.168.8.187:5000/api/v1/auth/login', {
@@ -63,12 +74,20 @@ const Login = () => {
       Cookies.set('type', result.selectUser.toString(), { expires: 7 });
       console.log(result.accessToken);
 
+      const privateData = {
+        "token": result.accessToken.toString(),
+        "userID": result._id.toString(),
+        "type": result.selectUser.toString()
+      }
+
+      dispatch(UserLogin(privateData));
+
       if (role == "1") {
         alert("Role - User");
-        navigation.navigate("Tabs", "1");
+        navigation.navigate("Tabs", privateData);
       } else {
         alert("Role - Worker");
-        navigation.navigate("Tabs", "2");
+        navigation.navigate("Tabs", privateData);
       }
     }catch(err){
       console.log("Something Worng");

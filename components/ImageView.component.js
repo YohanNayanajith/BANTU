@@ -19,7 +19,7 @@ const ImageView = () => {
           // shadowOffset: {width: 2, height: 4},
           // elevation: 2,
         }}
-        source={{ uri: "http://www.bantu.lk/images/LOGO3.png" }}
+        source={{ uri: "https://res.cloudinary.com/midefulness/image/upload/v1657441706/cld-sample-3.jpg" }}
       />
     </View>
   );

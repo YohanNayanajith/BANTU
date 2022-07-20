@@ -1,22 +1,23 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import StarRating from "react-native-star-rating";
-import Icon from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { COLORS, icons } from "../constans";
 
 const LatestPost = (props) => {
+  
   return (
     <View style={styles.container}>
       <View style={styles.container1}>
         {/* <Text style={{fontSize:16}}>Icon</Text> */}
         {/* <Text style={{fontSize:16}}>{icons.user}</Text> */}
         <Image
-          source={icons.user}
+          source={icons.new_post}
           resizeMode="contain"
           style={{
             width: 32,
             height: 32,
-            marginTop: 7,
+            marginTop: 4,
           }}
         />
         <View style={styles.container2}>
@@ -33,7 +34,7 @@ const LatestPost = (props) => {
       </Text>
       <View style={styles.container3}>
         <Image
-          source={icons.user}
+          source={icons.heart}
           resizeMode="contain"
           style={{
             width: 25,
@@ -42,7 +43,7 @@ const LatestPost = (props) => {
           }}
         />
         <Image
-          source={icons.user}
+          source={icons.comments}
           resizeMode="contain"
           style={{
             width: 25,
@@ -51,7 +52,7 @@ const LatestPost = (props) => {
           }}
         />
         <Image
-          source={icons.user}
+          source={icons.add}
           resizeMode="contain"
           style={{
             width: 25,

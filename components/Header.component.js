@@ -15,11 +15,14 @@ const { height, width } = Dimensions.get("window");
 import Icon from "react-native-vector-icons/FontAwesome";
 import { icons, SIZES, COLORS } from "../constans";
 import Cookies from "js-cookie";
+import { Logout } from '../store/actions';
+import { useDispatch } from 'react-redux';
 
 const Header = (props) => {
   const [notificationIcon, setNotificationIcon] = useState(COLORS.black);
   const [logout, setlogout] = useState(COLORS.black);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   if (Platform.OS == "android") {
@@ -32,6 +35,7 @@ const Header = (props) => {
     Cookies.remove("token");
     Cookies.remove("userID");
     Cookies.remove("type");
+    dispatch(Logout());
     navigation.navigate("Login");
   };
 
@@ -57,15 +61,15 @@ const Header = (props) => {
             }}
             onPress={pressNotification}
           >
-            {/* <Image
+            <Image
               source={icons.bell}
               resizeMode="contain"
               style={{
                 width: 30,
                 height: 30,
               }}
-            /> */}
-            <Icon name={"bell"} size={30} backgroundColor={notificationIcon} />
+            />
+            {/* <Icon name={"bell"} size={30} backgroundColor={notificationIcon} /> */}
           </TouchableOpacity>
 
           <View

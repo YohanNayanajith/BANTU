@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
-const Category = (props) => {
+const Category = ({imageUri,name}) => {
   return (
     <View
       style={{
@@ -20,12 +20,12 @@ const Category = (props) => {
     >
       <View style={{ flex: 2 }}>
         <Image
-          source={props.imageUri}
+          source={imageUri}
           style={{ flex: 1, width: null, height: null, resizeMode: "cover" }}
         />
       </View>
       <View style={{ flex: 1, paddingLeft: 10, paddingTop: 10 }}>
-        <Text>{props.name}</Text>
+        <Text>{name}</Text>
       </View>
     </View>
   );

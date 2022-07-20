@@ -8,6 +8,7 @@ import {
   ScrollView,
   FlatList,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -17,46 +18,69 @@ import { icons, COLORS, SIZES, FONTS } from "../constans";
 import TextDetail from "../components/TextDetail.component";
 import HeaderWithBack from "../components/HeaderWithBack.component";
 import { useNavigation } from "@react-navigation/core";
-
-const DATA = [
-  {
-    id: "1",
-    title: "Name",
-  },
-  {
-    id: "2",
-    title: "Email Address",
-  },
-  {
-    id: "3",
-    title: "Phone Number",
-  },
-  {
-    id: "4",
-    title: "User Type",
-  },
-];
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   // const [DATA, setDATA] = useState([]);
-  const UserID = Cookies.get("UserID");
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const userID = useSelector((state) => state.login.userID);
+  console.log(userID);
+  const authToken = useSelector((state) => state.login.authToken);
+  const URL = `https://localhost:5000/api/v1/user/find/${userID}`;
+  console.log(URL);
 
-  const URL = `https://62c3d0d17d83a75e39e803f7.mockapi.io/api/v1/users/${UserID}`;
+  let token = "Bearer " + authToken;
+
+  useEffect(() => {
+    fetch(URL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+    })
+      .then((response) => response.json()) // get response, convert to json
+      .then((json) => {
+        console.log(json);
+        setData(json);
+      })
+      .catch((error) => alert(error)) // display errors
+      .finally(() => setLoading(false)); // change loading state
+  }, []);
+
+  // Also get call asynchronous function
+  async function getMoviesAsync() {
+    try {
+      let response = await fetch(URL, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      let json = await response.json();
+      setData(json);
+      setLoading(false);
+    } catch (error) {
+      alert(error);
+    }
+  }
 
   // useEffect(() => {
-    // await axios
-    //   .get(URL,{
-    //     params:{
-    //       id:UserID
-    //     }
-    //   })
-    //   .then(function (response) {
-    //     setDATA(response);
-    //     // console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+  // await axios
+  //   .get(URL,{
+  //     params:{
+  //       id:UserID
+  //     }
+  //   })
+  //   .then(function (response) {
+  //     setDATA(response);
+  //     // console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
 
   //   const getUser = async () => {
   //     try {
@@ -70,6 +94,36 @@ const Profile = () => {
   //   };
   //   getUser();
   // }, []);
+  let userType;
+
+  if (data.selectUser === 0) {
+    userType = "Worker";
+  } else {
+    userType = "User";
+  }
+
+  let DATA = [
+    {
+      id: "1",
+      title: "Name",
+      value: data.name,
+    },
+    {
+      id: "2",
+      title: "Email Address",
+      value: data.email,
+    },
+    {
+      id: "3",
+      title: "Phone Number",
+      value: data.telephone_no,
+    },
+    {
+      id: "4",
+      title: "User Type",
+      value: userType,
+    },
+  ];
 
   return (
     <SafeAreaView style={[{ backgroundColor: COLORS.backgroundColor }]}>
@@ -103,17 +157,21 @@ const Profile = () => {
         </View>
 
         <View>
-          <FlatList
-            data={DATA}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <View>
-                <TextDetail text={item.title} />
-                <Placeholder text={"Name"} />
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-          />
+          {isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <FlatList
+              data={DATA}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <View>
+                  <TextDetail text={item.title} />
+                  <Placeholder text={item.value} />
+                </View>
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          )}
         </View>
       </View>
     </SafeAreaView>
